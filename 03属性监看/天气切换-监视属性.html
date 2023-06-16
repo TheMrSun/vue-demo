@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>天气切换</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <span>今天天气 {{info}}</span> <br/>
+    <button @click="changeWeather">点我切换</button>
+</div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+        el: "#root",
+        data: {
+            isHot: true,
+        },
+        methods: {
+            changeWeather: function () {
+                this.isHot = !this.isHot;
+            }
+        },
+        computed: {
+            info() {
+                return this.isHot ? "炎热" : "凉爽";
+            }
+        },
+        // watch: {
+        //     // isHot: {
+        //     //     immediate: true,
+        //     //     handler: function(newValue,oldValue){
+        //     //         console.log("isHot 修改了",newValue,oldValue)
+        //     //     }
+        //     // }
+        //
+        //     //简写 当只有handler 时可以简写
+        //     isHot(newValue,oldValue){
+        //         console.log("isHot 修改了",newValue,oldValue)
+        //     }
+        // }
+
+    });
+    vm.$watch('isHot', {
+        handler: function (newValue, oldValue) {
+            console.log("isHot 修改了", newValue, oldValue)
+        }
+    })
+
+    //简写
+    //所有vue 管理的函数写 function(){} 非vue管理写成()=>{} 由vue管理
+    vm.$watch('isHot', function () {
+        console.log("isHot 修改了", newValue, oldValue)
+    })
+</script>
+</html>

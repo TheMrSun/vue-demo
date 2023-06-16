@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>姓名-计算属性</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    姓 <input type="text" v-model="firstName"/> <br/><br/>
+    名 <input type="text" v-model="secondName"/> <br/><br/>
+    姓名 ： <span> {{fullName}} </span>
+</div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+        el: "#root",
+        data: {
+            firstName: "张",
+            secondName: "三",
+            fullName: "张-三"
+        },
+        methods: {
+            // fullName: function(){
+            //     return this.firstName + '-' + this.secondName;
+            // }
+        },
+        // computed:{
+        //     fullName:{
+        //         get: function(){
+        //             console.log("get 调用");
+        //             return this.firstName + '-' + this.secondName;
+        //         },
+        //         set: function (value) {
+        //             const arr = value.split("-");
+        //             this.firstName = arr[0];
+        //             this.secondName = arr[1];
+        //         }
+        //     }
+        // }
+        //计算属性简写，当只有get 方法可以简写
+        // computed:{
+        //     fullName () {
+        //         return this.firstName + '-' + this.secondName;
+        //     }
+        // },
+        //计算属性不能通过异步进行维护数据
+        //监听属性可以
+        watch: {
+            firstName(newValue, oldValue) {
+                setTimeout(() => {
+                    this.fullName = newValue + '-' + this.secondName;
+                }, 1000);
+
+            },
+            secondName(newValue, oldValue) {
+                this.fullName = this.firstName + '-' + newValue;
+            }
+        }
+
+    })
+</script>
+</html>
